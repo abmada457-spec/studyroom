@@ -192,7 +192,7 @@ export default function Studyroom({ connected, chatUrl = '/api/chat', incoming =
     {mobileOpen && <button className="shade" aria-label={t.menu} onClick={() => setMobileOpen(false)} />}
     <aside className={'sidebar ' + (mobileOpen ? 'open' : '')}>
       <div className="brand">
-        <span className="logo"><Icon name="brand" size={23} /></span>
+        <span className="logo md-mark" aria-hidden="true">م<span>✦</span></span>
         <div><strong>{t.brand}</strong><small>{t.workspace}</small></div>
       </div>
       <button className="new-chat" onClick={() => openChat(null)}><Icon name="plus" size={19} />{t.newChat}</button>

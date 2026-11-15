@@ -1,11 +1,11 @@
 .mudrik {
-  --md-ink: #15152f;
-  --md-muted: #575773;
-  --md-brand: #5c39e6;
+  --md-ink: var(--ink);
+  --md-muted: var(--muted);
+  --md-brand: var(--accent);
   --md-brand-dark: #4727c6;
-  --md-line: #e9e5f6;
-  --md-soft: #f4f0ff;
-  background: #fdfcff;
+  --md-line: var(--border);
+  --md-soft: var(--soft);
+  background: var(--paper);
   color: var(--md-ink);
   font-family: Tahoma, Arial, sans-serif;
   line-height: 1.65;

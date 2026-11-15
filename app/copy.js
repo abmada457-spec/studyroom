@@ -1,6 +1,6 @@
 export const copy = {
   ar: {
-    brand: 'غرفة الدراسة', workspace: 'مساحة الدراسة', newChat: 'محادثة جديدة',
+    brand: 'مدرك', workspace: 'مساحة الدراسة', newChat: 'محادثة جديدة',
     history: 'المحادثات الأخيرة', empty: 'ستظهر محادثاتك هنا.', local: 'محفوظ على هذا الجهاز',
     switchTo: 'English', appMode: 'وضع المعاينة', active: 'الذكاء الاصطناعي متصل', title: 'كيف يمكنني مساعدتك في الدراسة؟',
     description: 'أرفق سلايداتك أو ملاحظاتك، واسأل عنها كما تسأل زميلًا في الدراسة.',
@@ -23,7 +23,7 @@ export const copy = {
     sampleLabel: 'مثال تعليمي', modeHelp: 'الإجابات الفعلية تتطلب ربط خدمة الذكاء الاصطناعي.',
   },
   en: {
-    brand: 'Studyroom', workspace: 'Study workspace', newChat: 'New chat',
+    brand: 'Mudrik', workspace: 'Study workspace', newChat: 'New chat',
     history: 'Recent chats', empty: 'Your conversations will appear here.', local: 'Saved on this device',
     switchTo: 'العربية', appMode: 'Preview mode', active: 'AI connected', title: 'What are we studying today?',
     description: 'Attach your slides or notes, then ask questions like you would with a study partner.',
