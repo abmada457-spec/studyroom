@@ -1,0 +1,37 @@
+import { spawnSync } from 'node:child_process'
+import { cp, mkdtemp, rename, rm, writeFile } from 'node:fs/promises'
+import { resolve } from 'node:path'
+
+const root = resolve(import.meta.dirname, '..')
+const repository = process.env.PAGES_REPOSITORY ?? 'studyroom'
+const basePath = repository.endsWith('.github.io') || !repository ? '' : '/' + repository
+const stage = await mkdtemp(resolve(root, '.pages-build-'))
+try {
+  await cp(resolve(root, 'app'), resolve(stage, 'app'), {
+    recursive: true,
+    filter: source => source !== resolve(root, 'app/api'),
+  })
+  await writeFile(resolve(stage, 'next.config.mjs'), 'export default ' + JSON.stringify({
+    output: 'export', basePath, trailingSlash: true,
+  }) + '\n')
+  await writeFile(resolve(stage, 'app/page.jsx'), `
+import Studyroom from './studyroom'
+
+export default function Page() {
+  const chatUrl = process.env.NEXT_PUBLIC_STUDY_CHAT_URL
+  return <Studyroom connected={Boolean(chatUrl)} chatUrl={chatUrl} />
+}
+`)
+  const result = spawnSync(process.execPath, [
+    resolve(root, 'node_modules/next/dist/bin/next'), 'build', stage, '--webpack',
+  ], { cwd: root, stdio: 'inherit' })
+  if (result.error) throw result.error
+  if (result.status !== 0) throw new Error('Next.js Pages build failed')
+  const output = resolve(stage, 'out')
+  await writeFile(resolve(output, '.nojekyll'), '')
+  const docs = resolve(root, 'docs')
+  await rm(docs, { recursive: true, force: true })
+  await rename(output, docs)
+} finally {
+  await rm(stage, { recursive: true, force: true })
+}
