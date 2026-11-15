@@ -41,11 +41,11 @@ try {
     output: 'export', basePath, trailingSlash: true,
   }) + '\n')
   await writeFile(resolve(stage, 'app/page.jsx'), `
-import Studyroom from './studyroom'
+import Mudrik from './mudrik'
 
 export default function Page() {
   const chatUrl = process.env.NEXT_PUBLIC_STUDY_CHAT_URL
-  return <Studyroom connected={Boolean(chatUrl)} chatUrl={chatUrl} />
+  return <Mudrik connected={Boolean(chatUrl)} chatUrl={chatUrl} />
 }
 `)
   const result = spawnSync(process.execPath, [

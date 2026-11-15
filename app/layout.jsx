@@ -2,7 +2,7 @@ import 'katex/dist/katex.min.css'
 import './style.css'
 
 export const metadata = {
-  title: 'Studyroom | غرفة الدراسة',
+  title: 'مدرك | شرح المحاضرات بالذكاء الاصطناعي',
   description: 'A bilingual workspace for studying lecture slides, notes, and images.',
 }
 

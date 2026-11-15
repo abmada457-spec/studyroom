@@ -63,7 +63,7 @@ function CopyMessage({ message, t }) {
   </button>
 }
 
-export default function Studyroom({ connected, chatUrl = '/api/chat' }) {
+export default function Studyroom({ connected, chatUrl = '/api/chat', incoming = [], onHome }) {
   const [language, setLanguage] = useState('ar')
   const [chats, setChats] = useState([])
   const [selected, setSelected] = useState(null)
@@ -90,9 +90,12 @@ export default function Studyroom({ connected, chatUrl = '/api/chat' }) {
       if (canceled || !data) return
       if (data.language === 'en') setLanguage('en')
       setChats(data.chats)
-      setSelected(data.selected)
+      setSelected(incoming.length ? null : data.selected)
     }).catch(() => { if (!canceled) setStorageError(true) }).finally(() => {
-      if (!canceled) setReady(true)
+      if (!canceled) {
+        if (incoming.length) addFiles(incoming)
+        setReady(true)
+      }
     })
     return () => { canceled = true }
   }, [])
@@ -212,6 +215,7 @@ export default function Studyroom({ connected, chatUrl = '/api/chat' }) {
       <header className="top">
         <div className="top-start">
           <button className="menu" onClick={() => setMobileOpen(true)} aria-label={t.menu}><Icon name="menu" /></button>
+          {onHome && <button className="language" onClick={onHome}>{language === 'ar' ? 'الرئيسية' : 'Home'}</button>}
           <span className="section"><Icon name="chat" size={18} />{t.workspace}</span>
           <div className="mode" title={connected ? t.active : t.modeHelp}><i className={connected ? 'live' : ''} />{connected ? t.active : t.appMode}</div>
         </div>
