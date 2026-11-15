@@ -88,6 +88,8 @@ textarea::placeholder { color: #65766e; }
 .user .message-body { background: #eaf1e2; }
 .message-body b { font-size: 13px; }
 .message-body p { margin: 3px 0; line-height: 1.7; overflow-wrap: anywhere; white-space: pre-wrap; }
+.copy-message { display: inline-flex; align-items: center; gap: 5px; min-height: 30px; margin-block-start: 5px; padding: 3px 6px; border: 0; border-radius: 6px; color: var(--green); background: transparent; font-size: 12px; }
+.copy-message:hover { background: #dce9d8; }
 .avatar { flex: none; padding: 7px; display: grid; background: var(--lime); border-radius: 10px; }
 .file-list { display: flex; flex-wrap: wrap; gap: 6px; margin-block-end: 7px; }
 .attachment { display: inline-flex; align-items: center; gap: 5px; min-width: 0; max-width: 100%; padding: 4px 7px; border-radius: 8px; background: #ecf2e8; color: #325741; font-size: 12px; }

@@ -7,6 +7,8 @@ import { accept, maxBytes, maxFiles, readWorkspace, saveWorkspace, supportedFile
 const shapes = {
   brand: 'M3 19V5l9-2 9 2v14l-9 2-9-2Zm9-16v18M6.5 8l2 .5m-2 3 2 .5m7-3.5 2-.5m-2 4 2-.5',
   plus: 'M12 5v14M5 12h14',
+  copy: 'M8 8h12v12H8zM16 8V4H4v12h4',
+  check: 'm5 12 4 4L19 6',
   chat: 'M20 11.5a7.5 7.5 0 0 1-7.5 7.5H9l-5 2 1.5-4.5A7.5 7.5 0 1 1 20 11.5Z',
   disk: 'M5 16h14M6 19h12M7 5h10l3 9H4l3-9Z',
   globe: 'M3 12a9 9 0 1 0 18 0 9 9 0 0 0-18 0Zm0 0h18M12 3c4 4 4 14 0 18-4-4-4-14 0-18Z',
@@ -33,6 +35,31 @@ function Attachment({ file, remove, label }) {
     <Icon name="file" size={16} /><b dir="auto">{file.name}</b>
     {remove && <button type="button" onClick={remove} title={label} aria-label={label}><Icon name="x" size={14} /></button>}
   </span>
+}
+
+function CopyMessage({ message, t }) {
+  const [status, setStatus] = useState('copy')
+  const timer = useRef(null)
+  const text = [message.content, ...(message.files ?? [])].filter(Boolean).join('\n')
+
+  useEffect(() => () => clearTimeout(timer.current), [])
+
+  async function copyMessage() {
+    let result = 'copied'
+    try {
+      await navigator.clipboard.writeText(text)
+    } catch {
+      result = 'copyFailed'
+    }
+    setStatus(result)
+    clearTimeout(timer.current)
+    timer.current = setTimeout(() => setStatus('copy'), 1800)
+  }
+
+  return <button type="button" className="copy-message" onClick={copyMessage}>
+    <Icon name={status === 'copied' ? 'check' : 'copy'} size={15} />
+    <span aria-live="polite">{t[status]}</span>
+  </button>
 }
 
 export default function Studyroom({ connected, chatUrl = '/api/chat' }) {
@@ -212,6 +239,7 @@ export default function Studyroom({ connected, chatUrl = '/api/chat' }) {
               {message.role === 'assistant' && <b>{message.demo ? t.sampleLabel : t.brand}</b>}
               {!!message.files?.length && <div className="file-list">{message.files.map((name, i) => <Attachment key={i} file={{ name }} />)}</div>}
               {message.content && <p dir="auto">{message.content}</p>}
+              <CopyMessage key={chat.id} message={message} t={t} />
             </div>
           </article>)}
           {pending === chat.id && <div className="typing" role="status">{t.typing}</div>}
