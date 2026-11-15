@@ -88,6 +88,15 @@ textarea::placeholder { color: #65766e; }
 .user .message-body { background: #eaf1e2; }
 .message-body b { font-size: 13px; }
 .message-body p { margin: 3px 0; line-height: 1.7; overflow-wrap: anywhere; white-space: pre-wrap; }
+.message-content { min-width: 0; overflow-wrap: anywhere; line-height: 1.65; }
+.message-content > :first-child { margin-block-start: 0; }
+.message-content > :last-child { margin-block-end: 0; }
+.message-content h1, .message-content h2, .message-content h3, .message-content h4 { font-size: 1.04em; letter-spacing: normal; margin-block: .9em .3em; }
+.message-content ol, .message-content ul { padding-inline-start: 1.5em; margin-block: .45em; }
+.message-content pre, .message-content .katex-display { direction: ltr; overflow-x: auto; padding-block: 3px; }
+.message-content pre { background: #f2f5ee; padding: 10px; border-radius: 8px; }
+.message-content .katex { direction: ltr; unicode-bidi: isolate; }
+.message-content .katex-display { margin-block: .65em; }
 .copy-message { display: inline-flex; align-items: center; gap: 5px; min-height: 30px; margin-block-start: 5px; padding: 3px 6px; border: 0; border-radius: 6px; color: var(--green); background: transparent; font-size: 12px; }
 .copy-message:hover { background: #dce9d8; }
 .avatar { flex: none; padding: 7px; display: grid; background: var(--lime); border-radius: 10px; }

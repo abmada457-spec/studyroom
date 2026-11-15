@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { copy } from './copy'
+import MessageContent from './message-content'
 import { accept, maxBytes, maxFiles, readWorkspace, saveWorkspace, supportedFile } from './files'
 
 const shapes = {
@@ -238,7 +239,7 @@ export default function Studyroom({ connected, chatUrl = '/api/chat' }) {
             <div className="message-body">
               {message.role === 'assistant' && <b>{message.demo ? t.sampleLabel : t.brand}</b>}
               {!!message.files?.length && <div className="file-list">{message.files.map((name, i) => <Attachment key={i} file={{ name }} />)}</div>}
-              {message.content && <p dir="auto">{message.content}</p>}
+              {message.content && <MessageContent text={message.content} />}
               <CopyMessage key={chat.id} message={message} t={t} />
             </div>
           </article>)}
