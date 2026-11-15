@@ -1,6 +1,6 @@
 export const maxBytes = 10 * 1024 * 1024
 export const maxFiles = 4
-export const accept = '.pdf,.ppt,.pptx,.doc,.docx,.txt,.md,.csv,.png,.jpg,.jpeg,.webp,.gif'
+export const accept = '.pdf,.txt,.md,.csv,.png,.jpg,.jpeg,.webp,.gif'
 export function supportedFile(file) {
   return accept.split(',').includes('.' + file.name.split('.').at(-1).toLowerCase())
 }

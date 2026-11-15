@@ -117,12 +117,12 @@ export default function Studyroom({ connected, chatUrl = '/api/chat' }) {
         body.set('messages', JSON.stringify(history.map(({ role, content }) => ({ role, content: content.slice(0, 7000) }))))
         for (const file of updated.files) body.append('files', file)
         const result = await fetch(chatUrl, { method: 'POST', body })
-        if (!result.ok) throw new Error('Chat request failed')
+        if (!result.ok) throw new Error(result.status === 429 ? 'quota' : 'failure')
         reply = (await result.json()).answer
       }
       storeChat({ ...updated, failed: false, messages: [...updated.messages, { role: 'assistant', content: reply, preview: !connected }] })
-    } catch {
-      storeChat({ ...updated, failed: true })
+    } catch (error) {
+      storeChat({ ...updated, failed: error.message === 'quota' ? 'quota' : true })
     } finally {
       inFlight.current = false
       setPending(null)
@@ -215,7 +215,7 @@ export default function Studyroom({ connected, chatUrl = '/api/chat' }) {
             </div>
           </article>)}
           {pending === chat.id && <div className="typing" role="status">{t.typing}</div>}
-          {chat.failed && pending !== chat.id && <div className="error" role="alert">{t.failure}{' '}
+          {chat.failed && pending !== chat.id && <div className="error" role="alert">{chat.failed === 'quota' ? t.quota : t.failure}{' '}
             <button disabled={Boolean(pending)} onClick={() => { if (!inFlight.current) void answer(chat) }}>{t.retry}</button>
           </div>}
         </section>}
